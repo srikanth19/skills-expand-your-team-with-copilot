@@ -569,6 +569,13 @@ document.addEventListener("DOMContentLoaded", () => {
         `
         }
       </div>
+      <div class="share-buttons">
+        <span class="share-label">Share:</span>
+        <a class="share-btn share-email" href="#" title="Share via Email" aria-label="Share via Email">✉️</a>
+        <a class="share-btn share-whatsapp" href="#" title="Share via WhatsApp" aria-label="Share via WhatsApp">💬</a>
+        <a class="share-btn share-facebook" href="#" title="Share on Facebook" aria-label="Share on Facebook">📘</a>
+        <a class="share-btn share-twitter" href="#" title="Share on Twitter/X" aria-label="Share on Twitter/X">🐦</a>
+      </div>
     `;
 
     // Add click handlers for delete buttons
@@ -586,6 +593,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
     }
+
+    // Wire up share buttons
+    const shareText = `Check out "${name}" at Mergington High School! ${details.description} Schedule: ${formattedSchedule}`;
+    const shareUrl = window.location.href;
+
+    activityCard.querySelector(".share-email").href =
+      `mailto:?subject=${encodeURIComponent("Check out this activity: " + name)}&body=${encodeURIComponent(shareText + "\n\n" + shareUrl)}`;
+
+    activityCard.querySelector(".share-whatsapp").href =
+      `https://wa.me/?text=${encodeURIComponent(shareText + "\n" + shareUrl)}`;
+    activityCard.querySelector(".share-whatsapp").target = "_blank";
+    activityCard.querySelector(".share-whatsapp").rel = "noopener noreferrer";
+
+    activityCard.querySelector(".share-facebook").href =
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+    activityCard.querySelector(".share-facebook").target = "_blank";
+    activityCard.querySelector(".share-facebook").rel = "noopener noreferrer";
+
+    activityCard.querySelector(".share-twitter").href =
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+    activityCard.querySelector(".share-twitter").target = "_blank";
+    activityCard.querySelector(".share-twitter").rel = "noopener noreferrer";
 
     activitiesList.appendChild(activityCard);
   }
